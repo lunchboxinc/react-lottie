@@ -1,25 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import lottie from 'lottie-web';
+import React from "react";
+import PropTypes from "prop-types";
+import lottie from "lottie-web/build/player/lottie_light.min.js";
 
 export default class Lottie extends React.Component {
   componentDidMount() {
-    const {
-      options,
-      eventListeners,
-    } = this.props;
+    const {options, eventListeners} = this.props;
 
-    const {
-      loop,
-      autoplay,
-      animationData,
-      rendererSettings,
-      segments,
-    } = options;
+    const {loop, autoplay, animationData, rendererSettings, segments} = options;
 
     this.options = {
       container: this.el,
-      renderer: 'svg',
+      renderer: "svg",
       loop: loop !== false,
       autoplay: autoplay !== false,
       segments: segments !== false,
@@ -27,7 +18,7 @@ export default class Lottie extends React.Component {
       rendererSettings,
     };
 
-    this.options = { ...this.options, ...options };
+    this.options = {...this.options, ...options};
 
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
@@ -99,13 +90,19 @@ export default class Lottie extends React.Component {
 
   registerEvents(eventListeners) {
     eventListeners.forEach((eventListener) => {
-      this.anim.addEventListener(eventListener.eventName, eventListener.callback);
+      this.anim.addEventListener(
+        eventListener.eventName,
+        eventListener.callback,
+      );
     });
   }
 
   deRegisterEvents(eventListeners) {
     eventListeners.forEach((eventListener) => {
-      this.anim.removeEventListener(eventListener.eventName, eventListener.callback);
+      this.anim.removeEventListener(
+        eventListener.eventName,
+        eventListener.callback,
+      );
     });
   }
 
@@ -117,25 +114,19 @@ export default class Lottie extends React.Component {
     } else {
       this.anim.pause();
     }
-  }
+  };
 
   render() {
-    const {
-      width,
-      height,
-      ariaRole,
-      ariaLabel,
-      isClickToPauseDisabled,
-      title,
-    } = this.props;
+    const {width, height, ariaRole, ariaLabel, isClickToPauseDisabled, title} =
+      this.props;
 
     const getSize = (initial) => {
       let size;
 
-      if (typeof initial === 'number') {
+      if (typeof initial === "number") {
         size = `${initial}px`;
       } else {
-        size = initial || '100%';
+        size = initial || "100%";
       }
 
       return size;
@@ -144,13 +135,15 @@ export default class Lottie extends React.Component {
     const lottieStyles = {
       width: getSize(width),
       height: getSize(height),
-      overflow: 'hidden',
-      margin: '0 auto',
-      outline: 'none',
+      overflow: "hidden",
+      margin: "0 auto",
+      outline: "none",
       ...this.props.style,
     };
 
-    const onClickHandler = isClickToPauseDisabled ? () => null : this.handleClickToPause;
+    const onClickHandler = isClickToPauseDisabled
+      ? () => null
+      : this.handleClickToPause;
 
     return (
       // Bug with eslint rules https://github.com/airbnb/javascript/issues/1374
@@ -192,8 +185,8 @@ Lottie.defaultProps = {
   isStopped: false,
   isPaused: false,
   speed: 1,
-  ariaRole: 'button',
-  ariaLabel: 'animation',
+  ariaRole: "button",
+  ariaLabel: "animation",
   isClickToPauseDisabled: false,
-  title: '',
+  title: "",
 };
